@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fleetbalance - Vehicle Balance Insights</title>
+    <link rel="stylesheet" href="landing.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">fleetbalance</div>
+            <nav class="nav">
+                <a href="#product" class="nav-link">Product</a>
+                <a href="#use-cases" class="nav-link">Use Cases</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+            </nav>
+            <button class="cta-button-header" onclick="scrollToDemo()">View Demo</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="hero-section">
+        <div class="hero-container">
+            <!-- Left Content -->
+            <div class="hero-left">
+                <div class="badge">VEHICLE BALANCE INSIGHTS</div>
+                
+                <h1 class="headline">
+                    <span class="headline-line">Know your vehicle</span>
+                    <span class="headline-line headline-accent">balances instantly</span>
+                </h1>
+                
+                <p class="description">
+                    View wallet, fuel, and prepaid balances for your vehicles in one place. Get clear alerts and usage insights without manual tracking.
+                </p>
+                
+                <div class="cta-group">
+                    <button class="cta-primary" onclick="scrollToDemo()">Check Vehicle Balance</button>
+                    <button class="cta-secondary" onclick="scrollToDemo()">See How It Works</button>
+                </div>
+            </div>
+
+            <!-- Right Visual -->
+            <div class="hero-right">
+                <div class="ui-stack">
+                    <!-- Alert Card (Top Right) -->
+                    <div class="alert-card">
+                        <div class="alert-header">ALERT</div>
+                        <div class="alert-message">Fuel balance is below the recommended minimum.</div>
+                    </div>
+
+                    <!-- Balance Card (Center) -->
+                    <div class="balance-card">
+                        <div class="balance-header">VEHICLE DL01AB1234</div>
+                        <div class="balance-metrics">
+                            <div class="metric">
+                                <div class="metric-label">Wallet Balance</div>
+                                <div class="metric-value">₹2,450</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Fuel Balance</div>
+                                <div class="metric-value">₹1,200</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Prepaid Balance</div>
+                                <div class="metric-value">₹800</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Usage Card (Bottom Left) -->
+                    <div class="usage-card">
+                        <div class="usage-header">USAGE SUMMARY (24H)</div>
+                        <div class="usage-metrics">
+                            <div class="usage-metric">
+                                <div class="usage-label">Wallet Change</div>
+                                <div class="usage-value negative">-₹450</div>
+                            </div>
+                            <div class="usage-metric">
+                                <div class="usage-label">Fuel Change</div>
+                                <div class="usage-value negative">-₹200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Demo Section (Hidden initially, shown when CTA clicked) -->
+    <section id="demo" class="demo-section hidden">
+        <div class="demo-container">
+            <h2 class="demo-title">Try It Now</h2>
+            <div class="demo-content">
+                <div class="input-section">
+                    <label for="vehicle-id-demo">Vehicle ID</label>
+                    <input 
+                        type="text" 
+                        id="vehicle-id-demo" 
+                        placeholder="Enter vehicle ID (e.g., DL01AB1234)"
+                        autocomplete="off"
+                    >
+                    <button id="fetch-btn-demo" onclick="fetchBalanceDemo()">Fetch Balance</button>
+                </div>
+
+                <div id="loading-demo" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Loading balance information...</p>
+                </div>
+
+                <div id="error-demo" class="error hidden"></div>
+
+                <div id="alerts-container-demo" class="alerts-container hidden"></div>
+
+                <div id="balance-container-demo" class="balance-container hidden">
+                    <div class="balance-header-demo">
+                        <h2>Vehicle: <span id="display-vehicle-id-demo"></span></h2>
+                        <p class="last-updated">Last Updated: <span id="last-updated-demo"></span></p>
+                    </div>
+                    
+                    <div class="balance-cards">
+                        <div class="balance-card-demo wallet">
+                            <div class="card-content">
+                                <h3>Wallet</h3>
+                                <p class="balance-amount" id="wallet-balance-demo">₹0.00</p>
+                            </div>
+                        </div>
+
+                        <div class="balance-card-demo fuel">
+                            <div class="card-content">
+                                <h3>Fuel</h3>
+                                <p class="balance-amount" id="fuel-balance-demo">₹0.00</p>
+                            </div>
+                        </div>
+
+                        <div class="balance-card-demo prepaid">
+                            <div class="card-content">
+                                <h3>Prepaid</h3>
+                                <p class="balance-amount" id="prepaid-balance-demo">₹0.00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="usage-summary-demo" class="usage-summary hidden">
+                        <h3>Balance Usage Summary</h3>
+                        <div class="usage-items">
+                            <div class="usage-item">
+                                <span class="usage-label">Wallet:</span>
+                                <span class="usage-change" id="wallet-change-demo">₹0.00</span>
+                            </div>
+                            <div class="usage-item">
+                                <span class="usage-label">Fuel:</span>
+                                <span class="usage-change" id="fuel-change-demo">₹0.00</span>
+                            </div>
+                            <div class="usage-item">
+                                <span class="usage-label">Prepaid:</span>
+                                <span class="usage-change" id="prepaid-change-demo">₹0.00</span>
+                            </div>
+                            <div class="usage-period">
+                                <span id="usage-period-demo">last 24 hours</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="landing.js"></script>
+</body>
+</html>
+
